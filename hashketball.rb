@@ -113,7 +113,6 @@ def game_hash
        }
      }
    } 
-   end
 end
        def num_of_points_scored(name)
          game_hash.each do |location,team_data|
