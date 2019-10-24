@@ -11,17 +11,17 @@ def game_hash
    shoe:16,
    points:22,
    rebounds:12,
-   assist:12,
+   assists:12,
    steals:3,
    blocks:1,
    slam_dunks:1
    },
  "Reggie Evans" =>{
-   number:14,
+   number:30,
    shoe:14,
    points:12,
    rebounds:12,
-   assist:12,
+   assists:12,
    steals:12,
    blocks:12,
    slam_dunks:7
@@ -31,7 +31,7 @@ def game_hash
    shoe:17,
    points:17,
    rebounds:19,
-   assist:10,
+   assists:10,
    steals:3,
    blocks:1,
    slam_dunks:15
@@ -41,17 +41,17 @@ def game_hash
      shoe:19,
      points:26,
      rebounds:11,
-     assist:6,
+     assists:6,
      steals:3,
      blocks:8,
-     slam_dunks:15
+     slam_dunks:5
      },
      "Jason Terry" =>{
        number:31,
        shoe:15,
        points:19,
        rebounds:2,
-       assist:2,
+       assists:2,
        steals:4,
        blocks:11,
        slam_dunks:1
@@ -67,7 +67,7 @@ def game_hash
            shoe:18,
            points:10,
            rebounds:1,
-           assist:1,
+           assists:1,
            steals:2,
            blocks:7,
            slam_dunks:2
@@ -77,7 +77,7 @@ def game_hash
             shoe:16,
             points:12,
             rebounds:4,
-            assist:7,
+            assists:7,
             steals:22,
             blocks:15,
             slam_dunks:10
@@ -87,7 +87,7 @@ def game_hash
             shoe:14,
             points:24,
             rebounds:12,
-            assist:12,
+            assists:12,
             steals:4,
             blocks:5,
             slam_dunks:5
@@ -97,7 +97,7 @@ def game_hash
             shoe:15,
             points:33,
             rebounds:3,
-            assist:2,
+            assists:2,
             steals:1,
             blocks:1,
             slam_dunks:0
@@ -107,7 +107,7 @@ def game_hash
             shoe:15,
             points:6,
             rebounds:12,
-            assist:12,
+            assists:12,
             steals:7,
             blocks:5,
             slam_dunks:12
@@ -158,38 +158,91 @@ def team_colors(team)
 def player_numbers(team_name)
   nums = []
   game_hash.each do |team_position,team_data|
-    if team[:team_name] == team_name
-      team.each do |attributes,data|
+    #binding.pry
+    if team_data[:team_name] == team_name
+      team_data.each do |attributes,data|
         if attributes == :players
-          binding.pry
+          #binding.pry
           data.each do |player|
-            nums << player[:number]
-          end
-        end
-      end
-    end
-  end
+             #binding.pry
+            nums << player[1][:number]
+           end
+         end
+       end
+     end
+   end
   nums
 end
   
-  #def player_stats(players_name)    
-    #new_hash -{}
-    #game_hash.each do |team_position,team_data|
-      #team.each do |attributes,data|
-        #if attributes == :players
-          #data.each do |player|
-            #if player[:player_name] == players_name
-              new_hash =player
-        #end 
-      #end 
-     # end
-    #end
-    #end
-  #new_hash
-#end 
+  def player_stats(players_name)    
+    new_hash = {}
+    game_hash.each do |team_position,team_data|
+      team_data.each do |attributes,data|
+        if attributes == :players
+        #binding.pry
+         data.each do |player|
+           #binding.pry
+           if player[0] == players_name
+             new_hash = player[1]
+         end
+       end
+     end
+   end
+ end 
+ new_hash
+end
     
 
- 
+   def big_shoe_rebounds
+      largest_shoe_size = 0
+      largest_rebounds = 0
+     game_hash.each do |team_position,team_data|
+      team_data[:players].each do |player,player_stats|
+         #binding.pry
+        if  player_stats[:shoe] > largest_shoe_size 
+        largest_shoe_size = player_stats[:shoe] 
+        largest_rebounds = player_stats[:rebounds]
+        end
+      end
+     end 
+    return largest_rebounds
+  end
+     
+     def most_points_scored 
+       most_points_scored = 0
+       players = nil 
+       game_hash.each do |team_position,team_data|
+      team_data[:players].each do |player,player_stats|
+        #binding.pry
+        if player_stats[:points] > most_points_scored 
+        most_points_scored = player_stats[:points] 
+        players = player
+        end
+      end
+     end 
+    return players
+  end
+       
+       
+       def winning_team
+          team_name = "Brooklyn Nets"
+          team_points = {"Brooklyn Nets" => 0, "Charlotte Hornets" => 0}
+          game_hash.each do |team_position, team_data|
+          team_data[:players].each do |player,stats|
+          #binding.pry
+         team_points[team_data[:team_name]] += stats[:points]
+         if most_points_scored > team_name
+         end
+        return team_name
+      end
+    end
+  end 
+     
+    
+       def player_with_longest_name 
+       
+
+
 
  
 
