@@ -215,6 +215,7 @@ end
       team_data[:players].each do |player,player_stats|
         #binding.pry
         if player_stats[:points] > most_points_scored 
+          # binding.pry
         most_points_scored = player_stats[:points] 
         players = player
         end
@@ -225,30 +226,46 @@ end
        
        
        def winning_team
-          team_name = "Brooklyn Nets"
           team_points = {"Brooklyn Nets" => 0, "Charlotte Hornets" => 0}
           game_hash.each do |team_position, team_data|
           team_data[:players].each do |player,stats|
-          #binding.pry
-         team_points[team_data[:team_name]] += stats[:points]
-         if most_points_scored > team_name
-         end
-        return team_name
+          # binding.pry
+        team_points[team_data[:team_name]] += stats[:points]
       end
     end
+   return team_points.key(team_points.values.max)
   end 
      
-    
-       #def player_with_longest_name 
-      #most_longest_name = 0
-       #players = 0 
-      #game_hash.each do |team_position,team_data|
-        #binding.pry
-       #team_data[:players].each do |player,stats|
-      #binding.pry
-      #end
-    #end
-  #end
+  def player_with_longest_name
+  longest = 0
+  player_name = ""
+  game_hash.each do |team_position,team_data|
+    team_data[:players].each do |players,stats|
+   if players.length >longest
+        # binding.pry
+        longest = players.length 
+        player_name = players
+      end 
+    end
+  end
+ return player_name
+end
+
+
+def long_name_steals_a_ton?
+  name_with_steal = nil
+  steal_number = 0
+  game_hash.each do |location, team_data|
+    team_data[:players].each do |name, value|
+      if value[:steals] > steal_number
+        steal_number = value[:steals]
+        name_with_steal = name
+      end
+    end
+  end
+  name_with_steal == player_with_longest_name
+end
+
 
        
 
